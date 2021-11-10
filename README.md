@@ -1,7 +1,7 @@
 # Procedimentos de Instalação e configuração do ambiente
-
+   
 Após clonar o repositório, através do terminal, deve-se acessar a pasta `docker` e preparar o arquivo `.env` para a construção do container, dentro da pasta existe um arquivo `.env.example` para servir de guia, lá estão os parametros necessários para a construção da imagem, sendo eles:
----
+
 - DEEPCENTER_DIR - Caminho do diretório do projeto
 - WEB_PORT - Porta que será utilizada para acesso via navegador
 - MYSQL_DIR - Caminho para armazenar os arquivos de banco de dados
@@ -17,7 +17,7 @@ Uma vez configurado o arquivo `.env`, basta executar os seguintes comandos no te
 Após a criação do container, alguns procedimetos devem ser executados, como a instalação de dependencias do composer e os pacotes relacionados ao npm.
 
 Acesse o container com o seguinte comando: `docker exec -it app_deepcenter bash`, feito isso você estará dentro do container na pasta `/var/www/html`, acesse a pasta `deepcenter` e execute os seguintes comandos:
----
+
 - composer install
 - php artisan migrate
 - npm install
