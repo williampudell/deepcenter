@@ -16,7 +16,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'status'
+    ];
+
+    protected $guarded = [
+        'id'
     ];
 
     /**
@@ -36,4 +40,46 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected function getStatus($value)
+    {
+        $status = '';
+        switch ($value) {
+            case 0:
+                $status = 'Inativo';
+                break;
+            case 1:
+                $status = 'Ativo';
+                break;
+            default:
+                $status = 'Desconhecido';
+                break;
+        }
+        return $status;
+    }
+
+    protected function getBadgeColor($value)
+    {
+        $badge = 'text-light ';
+        switch ($value) {
+            case 0:
+                $badge .= 'bg-danger';
+                break;
+            case 1:
+                $badge .= 'bg-success';
+                break;
+            default:
+                $badge .= 'bg-secondary';
+                break;
+        }
+        return $badge;
+    }
+
+    public function getStatusAttribute($value)
+    {
+        $status = $this->getStatus($value);
+        $badge = $this->getBadgeColor($value);
+        return "<span class='badge {$badge}'>{$status}</span>";
+    }
+
 }
