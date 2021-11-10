@@ -1,61 +1,43 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Procedimentos de Instalação e configuração do ambiente
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Após clonar o repositório, através do terminal, deve-se acessar a pasta `docker` e preparar o arquivo `.env` para a construção do container, dentro da pasta existe um arquivo `.env.example` para servir de guia, lá estão os parametros necessários para a construção da imagem, sendo eles:
+---
+- DEEPCENTER_DIR - Caminho do diretório do projeto
+- WEB_PORT - Porta que será utilizada para acesso via navegador
+- MYSQL_DIR - Caminho para armazenar os arquivos de banco de dados
+- MYSQL_PASS - Senha do usuário root
+- MYSQL_PORT - Porta de acesso ao banco de dados
+- REDIS_DIR - Caminho para armazenar os arquivos do redis
+- REDIS_PORT - Porta de acesso ao redis
 
-## About Laravel
+Por padrão a seguintes range de IP's de container foi atribuida a stack: `172.18.0.0/16`. Se for necessário mudar essa range por motivos de conflito, deve-se editar o arquivo `docker-compose.yml` e alterar os IP's atribuidos para as imagens de MySQL e Redis, pois com a porta e os IP's devidamente configurados, ambos são acessiveis por fora dos containers.   
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Uma vez configurado o arquivo `.env`, basta executar os seguintes comandos no terminal para a construção de criação dos containers: `docker-compose build && docker-compose up -d`.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Após a criação do container, alguns procedimetos devem ser executados, como a instalação de dependencias do composer e os pacotes relacionados ao npm.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Acesse o container com o seguinte comando: `docker exec -it app_deepcenter bash`, feito isso você estará dentro do container na pasta `/var/www/html`, acesse a pasta `deepcenter` e execute os seguintes comandos:
+---
+- composer install
+- php artisan migrate
+- npm install
+- npm run dev
 
-## Learning Laravel
+Feito isso você já deve ter acesso a aplicação completa no navegador em `localhost` com a porta configurada no `.env`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+A primeira etapa será se cadastrar através do link `Register` onde será solicitado Nome, E-mail, uma Senha e a confirmação desta senha.
+Ao completar o cadastro você estará na área logada, onde em um menu lateral você terá 3 links:
+- Home
+- Membros
+- Logout
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Home
+Esta é a tela exibida ao cadastrar-se ou efetuar o login
 
-## Laravel Sponsors
+# Membros
+é Um conjunto de telas onde são listado os membros cadastrados, é possível adicionar novos membros, editar e excluir
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+# Logout
+Te desloga da aplicação e te devolve para a tela inicial
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Quaisquer dúvidas encontro-me a inteira disposição para saná-las
