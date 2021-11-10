@@ -1,0 +1,10 @@
+127.0.0.1       localhost
+127.0.0.1       app.deepcenter *.app.deepcenter
+::1     localhost ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+172.18.0.20     mysql
+172.18.0.30     redis
+172.18.0.40     mailhog
